@@ -1,7 +1,7 @@
 # Property Pro Lite
 
 
-![Property Pro Lite Logo](https://chunkingz.github.io/Property-Pro-Lite/img/assets/logo/Property-Pro-Lite-03.png "Property Pro Lite Logo")
+![Property Pro Lite Logo](https://chunkingz.github.io/Property-Pro-Lite/img/assets/favicon/apple-icon.png "Property Pro Lite Logo")
 
 
 `Project Overview :`
