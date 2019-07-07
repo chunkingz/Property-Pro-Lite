@@ -28,6 +28,7 @@ const userSignUp = async (req, res) => {
   inputError(req, res);
   const data = checkIfUserExists(email);
   userExists(res, data);
+
   try {
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);
@@ -38,7 +39,7 @@ const userSignUp = async (req, res) => {
   } catch (err) {
     return res.status(500).send({
       status: 'error',
-      error: err
+      error: err,
     });
   }
 };
