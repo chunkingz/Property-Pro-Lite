@@ -6,9 +6,10 @@ import saveNewUser from '../helpers/usersHelper';
 import payload from '../helpers/auth';
 import errorHelpers from '../helpers/errorHelper';
 
-const { authError, inputError } = errorHelpers;
 const { users } = db;
 const { payloader } = payload;
+const { authError, inputError, userExists } = errorHelpers;
+
 const checkIfUserExists = req => users.find(user => user.email === req);
 
 /**
@@ -26,15 +27,7 @@ const userSignUp = async (req, res) => {
   let { password } = req.body;
   inputError(req, res);
   const data = checkIfUserExists(email);
-  if (data !== undefined) {
-    return res.status(400).send({
-      status: 'error',
-      data: {
-        message: 'User already exists, kindly login'
-      }
-    });
-  }
-
+  userExists(res, data);
   try {
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);

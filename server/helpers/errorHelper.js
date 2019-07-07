@@ -28,4 +28,15 @@ const inputError = (req, res) => {
   }
 };
 
-export default { authError, inputError };
+const userExists = (res, data) => {
+  if (data !== undefined) {
+    return res.status(400).send({
+      status: 'error',
+      data: {
+        message: 'User already exists, kindly login'
+      }
+    });
+  }
+};
+
+export default { authError, inputError, userExists };
