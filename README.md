@@ -1,5 +1,7 @@
 # Property Pro Lite
 
+### Build & Coverage status 
+[![Build Status](https://travis-ci.org/chunkingz/Property-Pro-Lite.svg?branch=develop)](https://travis-ci.org/chunkingz/Property-Pro-Lite)
 
 ![Property Pro Lite Logo](https://chunkingz.github.io/Property-Pro-Lite/img/assets/favicon/apple-icon.png "Property Pro Lite Logo")
 

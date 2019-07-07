@@ -1,5 +1,5 @@
 language: node_js
-node_js: "v8.11.3"
+node_js: "v10.15.3"
 install: npm install
 script: npm test
 after_success: npm run coverage
