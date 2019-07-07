@@ -18,12 +18,16 @@ cloudinary.config({
 */
 const imageUpload = async (img) => {
   console.log('** ** ** Image Upload ** ** **');
-  await cloudinary.uploader.upload(img, { tags: 'sample' }, (err, image) => {
-    if (err) { console.log(`error: ${err}`); errMsg = err; return err; }
-    console.log('** File Upload complete**');
-    imgUri = image.url;
-  });
-  return imgUri || errMsg;
+  try {
+    await cloudinary.uploader.upload(img, { tags: 'sample' }, (err, image) => {
+      if (err) { console.log(`error: ${err}`); errMsg = err; return err; }
+      console.log('** File Upload complete**');
+      imgUri = image.url;
+    });
+    return imgUri || errMsg;
+  } catch (err) {
+    console.log(err.Error);
+  }
 };
 
 export default imageUpload;
