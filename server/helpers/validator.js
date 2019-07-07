@@ -1,13 +1,17 @@
 import { check } from 'express-validator';
 
+const refactor = (a, b) => {
+  check(a)
+    .not().isEmpty().withMessage(`${a} is required`)
+    .isInt()
+    .withMessage(`${a} must be a valid number`)
+    .isLength({ min: 3 })
+    .withMessage(b);
+};
+
 const postValidate = [
   check('owner', 'Owner should be set to a valid email').isEmail(),
-  check('price')
-    .not().isEmpty().withMessage('Price is required')
-    .isInt()
-    .withMessage('price must be a valid number')
-    .isLength({ min: 3 })
-    .withMessage('invalid price amount'),
+  refactor('price', 'invalid price amount'),
   check('state', 'State is required and should be more than 3 chars').isLength({ min: 3 }),
   check('city', 'City is required and should be more than 3 chars').isLength({ min: 3 }),
   check('address', 'Address is required and should be more than 5 chars').isLength({ min: 5 }),
@@ -28,12 +32,7 @@ const userSignUpValidate = [
     .not().isEmpty().withMessage('Password is required')
     .isLength({ min: 3 })
     .withMessage('Password should be 5 characters or more'),
-  check('phoneNumber')
-    .not().isEmpty().withMessage('Phone Number is required')
-    .isInt()
-    .withMessage('Phone Number must be a valid number')
-    .isLength({ min: 3 })
-    .withMessage('Phone Number should be 11 characters'),
+  refactor('phoneNumber', 'Phone Number should be 11 characters'),
   check('address')
     .not().isEmpty().withMessage('Address is required')
     .isLength({ min: 3 })

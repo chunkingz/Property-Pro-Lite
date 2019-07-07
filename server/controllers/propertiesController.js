@@ -3,6 +3,7 @@
 import { validationResult } from 'express-validator';
 import db from '../models/db';
 import helpers from '../helpers/propertyHelper';
+import getProps from '../helpers/getProperty';
 import cloudinary from '../helpers/cloudinary';
 
 const { saveNewProperty, updateProperty, deletesProperty } = helpers;
@@ -44,19 +45,8 @@ const getAllProperties = (req, res) => res.status(200).send({
 
 const getPropertiesByType = (req, res) => {
   const data = checkPropertyType(req.query.type);
-  if (data !== undefined) {
-    return res.status(200).send({
-      status: 'success',
-      data: {
-        message: 'Property successfully retrieved by type',
-        data
-      }
-    });
-  }
-  return res.status(400).send({
-    status: 'error',
-    error: 'Invalid type',
-  });
+  const errMsg = 'Invalid type';
+  getProps(data, res, errMsg);
 };
 
 /**
@@ -69,19 +59,8 @@ const getPropertiesByType = (req, res) => {
 
 const getProperty = (req, res) => {
   const data = checkProperty(req.params.id);
-  if (data !== undefined) {
-    return res.status(200).send({
-      status: 'success',
-      data: {
-        message: 'Property successfully retrieved',
-        data
-      }
-    });
-  }
-  return res.status(400).send({
-    status: 'error',
-    error: 'Invalid ID',
-  });
+  const errMsg = 'Invalid ID';
+  getProps(data, res, errMsg);
 };
 
 /**

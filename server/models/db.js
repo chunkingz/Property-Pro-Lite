@@ -25,18 +25,6 @@ const property = [
     created_on: new Date().toDateString(),
     image_url: 'https://res.cloudinary.com/chunkingz/image/upload/v1562322246/mh7swnfgxxmdew5c7chf.png',
   },
-  {
-    id: 2,
-    owner: 'cenneth@email.com',
-    status: 'available',
-    price: '25000',
-    state: 'Rivers',
-    city: 'Port Harcourt',
-    address: '21 Peter Odili road',
-    type: '5 bedroom',
-    created_on: new Date().toDateString(),
-    image_url: 'https://res.cloudinary.com/chunkingz/image/upload/v1562251814/sample.jpg',
-  },
 ];
 
 const flags = [
