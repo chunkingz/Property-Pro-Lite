@@ -124,7 +124,7 @@ describe('Properties route Test Suite', () => {
       expect(status).to.eq(200);
       expect(JSON.parse(res.text).status).to.eq('success');
       expect(JSON.parse(res.text).data).to.be.an('object');
-      expect(JSON.parse(res.text).data.message).to.eq('Property successfully retrieved by type');
+      expect(JSON.parse(res.text).data.message).to.eq('Property successfully retrieved');
       expect(JSON.parse(res.text).data.data).to.be.an('object');
     });
     it('should throw an error on ivalid type', async () => {

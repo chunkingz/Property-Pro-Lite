@@ -1,13 +1,11 @@
 import { check } from 'express-validator';
 
-const refactor = (a, b) => {
-  check(a)
-    .not().isEmpty().withMessage(`${a} is required`)
-    .isInt()
-    .withMessage(`${a} must be a valid number`)
-    .isLength({ min: 3 })
-    .withMessage(b);
-};
+const refactor = (a, b) => check(a)
+  .not().isEmpty().withMessage(`${a} is required`)
+  .isInt()
+  .withMessage(`${a} must be a valid number`)
+  .isLength({ min: 3 })
+  .withMessage(b);
 
 const postValidate = [
   check('owner', 'Owner should be set to a valid email').isEmail(),
