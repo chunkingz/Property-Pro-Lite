@@ -1,14 +1,16 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-import { validationResult } from 'express-validator';
 import db from '../models/db';
 import helpers from '../helpers/propertyHelper';
 import getProps from '../helpers/getProperty';
 import cloudinary from '../helpers/cloudinary';
+import errorHelpers from '../helpers/errorHelper';
 
 const { saveNewProperty, updateProperty, deletesProperty } = helpers;
 const { property } = db;
 const imageUpload = cloudinary;
+const { inputError } = errorHelpers;
+
 
 /**
  * check if the property id is correct
@@ -44,9 +46,7 @@ const getAllProperties = (req, res) => res.status(200).send({
 */
 
 const getPropertiesByType = (req, res) => {
-  const data = checkPropertyType(req.query.type);
-  const errMsg = 'Invalid type';
-  getProps(data, res, errMsg);
+  getProps(checkPropertyType(req.query.type), res, 'Invalid type');
 };
 
 /**
@@ -58,9 +58,7 @@ const getPropertiesByType = (req, res) => {
 */
 
 const getProperty = (req, res) => {
-  const data = checkProperty(req.params.id);
-  const errMsg = 'Invalid ID';
-  getProps(data, res, errMsg);
+  getProps(checkProperty(req.params.id), res, 'Invalid ID');
 };
 
 /**
@@ -75,13 +73,7 @@ const postProperty = async (req, res) => {
   const {
     owner, price, state, city, address, type, image_url
   } = req.body;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({
-      status: 'error',
-      errorMsg: errors.array(),
-    });
-  }
+  inputError(req, res);
   const image_uri = imageUpload(image_url);
 
   const newProperty = await saveNewProperty(
@@ -140,11 +132,10 @@ const deleteProperty = async (req, res) => {
   const data = await checkProperty(req.params.id);
   if (data !== undefined) {
     // console.log(data.id);
-    const remain = await deletesProperty(data.id);
+    await deletesProperty(data.id);
     return res.status(200).send({
       status: 'success',
       message: 'Property ad deleted successfully',
-      remain
     });
   }
   return res.status(400).send({
