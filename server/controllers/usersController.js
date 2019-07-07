@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import db from '../models/db';
 import saveNewUser from '../helpers/usersHelper';
 import payload from '../helpers/auth';
+import errorHelpers from '../helpers/errorHelper';
 
 const { users } = db;
 const { payloader } = payload;
+const { authError, inputError, userExists } = errorHelpers;
+
 const checkIfUserExists = req => users.find(user => user.email === req);
 
 /**
@@ -23,24 +25,9 @@ const userSignUp = async (req, res) => {
     email, first_name, last_name, phoneNumber, address, is_admin
   } = req.body;
   let { password } = req.body;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({
-      status: 'error',
-      errorMsg: errors.array(),
-    });
-  }
-
+  inputError(req, res);
   const data = checkIfUserExists(email);
-  if (data !== undefined) {
-    return res.status(400).send({
-      status: 'error',
-      data: {
-        message: 'User already exists, kindly login'
-      }
-    });
-  }
-
+  userExists(data, res);
   try {
     const salt = await bcrypt.genSalt(10);
     password = await bcrypt.hash(password, salt);
@@ -51,21 +38,11 @@ const userSignUp = async (req, res) => {
   } catch (err) {
     return res.status(500).send({
       status: 'error',
-      error: err
+      error: err,
     });
   }
 };
 
-/**
- * Auth Error helper.
- * @param {object} res the response object.
- *
-*/
-
-const error = res => res.status(400).send({
-  status: 'error',
-  message: 'Invalid credentials'
-});
 
 /**
  * Login an existing User account.
@@ -78,20 +55,14 @@ const error = res => res.status(400).send({
 const userSignIn = async (req, res) => {
   const { email } = req.body;
   const { password } = req.body;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).send({
-      status: 'error',
-      errorMsg: errors.array(),
-    });
-  }
+  inputError(req, res);
   const data = checkIfUserExists(email);
   if (data === undefined) {
-    return error(res);
+    return authError(res);
   }
   const isMatch = await bcrypt.compare(password, data.password);
   if (!isMatch) {
-    return error(res);
+    return authError(res);
   }
   try {
     return payloader(res, data, 200);

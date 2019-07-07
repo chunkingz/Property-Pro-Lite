@@ -1,7 +1,7 @@
 # Property Pro Lite
 
 ### Build & Coverage status 
-[![Build Status](https://travis-ci.org/chunkingz/Property-Pro-Lite.svg?branch=develop)](https://travis-ci.org/chunkingz/Property-Pro-Lite)
+[![Build Status](https://travis-ci.org/chunkingz/Property-Pro-Lite.svg?branch=develop)](https://travis-ci.org/chunkingz/Property-Pro-Lite) [![Coverage Status](https://coveralls.io/repos/github/chunkingz/Property-Pro-Lite/badge.svg?branch=develop)](https://coveralls.io/github/chunkingz/Property-Pro-Lite?branch=develop)
 
 ![Property Pro Lite Logo](https://chunkingz.github.io/Property-Pro-Lite/img/assets/favicon/apple-icon.png "Property Pro Lite Logo")
 
