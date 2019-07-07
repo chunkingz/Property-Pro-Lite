@@ -1,7 +1,7 @@
 # Property Pro Lite
 
 ### Build & Coverage status 
-[![Build Status](https://travis-ci.org/chunkingz/Property-Pro-Lite.svg?branch=develop)](https://travis-ci.org/chunkingz/Property-Pro-Lite) [![Coverage Status](https://coveralls.io/repos/github/chunkingz/Property-Pro-Lite/badge.svg?branch=develop)](https://coveralls.io/github/chunkingz/Property-Pro-Lite?branch=develop)
+[![Build Status](https://travis-ci.org/chunkingz/Property-Pro-Lite.svg?branch=develop)](https://travis-ci.org/chunkingz/Property-Pro-Lite) [![Coverage Status](https://coveralls.io/repos/github/chunkingz/Property-Pro-Lite/badge.svg?branch=develop)](https://coveralls.io/github/chunkingz/Property-Pro-Lite?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/af7f8b5add3c4f81b90a/maintainability)](https://codeclimate.com/github/chunkingz/Property-Pro-Lite/maintainability)
 
 ![Property Pro Lite Logo](https://chunkingz.github.io/Property-Pro-Lite/img/assets/favicon/apple-icon.png "Property Pro Lite Logo")
 
