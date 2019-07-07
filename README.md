@@ -26,5 +26,8 @@
 # Project Management
 This project is managed on [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2357217)
 
+# API
+* The api backend is hosted on [heroku here](https://property-pro-lite-ng.herokuapp.com/)
+
 # Developer
 chunkingz :trollface:
