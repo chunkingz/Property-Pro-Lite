@@ -29,7 +29,10 @@
 This project is managed on [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2357217)
 
 # API
-* The api backend is hosted on [heroku here](https://property-pro-lite-ng.herokuapp.com/)
+* The API backend is hosted on [heroku here](https://property-pro-lite-ng.herokuapp.com/)
+
+# API Docs
+* The API documentation can be found [here](https://property-pro-lite-ng.herokuapp.com/public/docs/)
 
 # Developer
 chunkingz :trollface:
