@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken';
 
 /**
- * Authenticates a User.
+ * Authentication middleware for checking if its a valid User.
  * @param {object} req the request object.
  * @param {object} res the response object.
  * @param {object} next calls the next middleware.
  * @return  {Function} next calls the next middleware
  *
 */
-
 const authMiddleware = async (req, res, next) => {
   const token = req.header('x-auth-token');
   if (!token) {
@@ -33,13 +32,13 @@ const authMiddleware = async (req, res, next) => {
  * Payload middleware/helper function.
  * @param {object} res the response object.
  * @param {object} data the payload parameter.
+ * @param {object} code the http status code.
  *
 */
-
 const payloader = async (res, data, code) => {
   const payload = {
     user: {
-      id: data.id
+      id: data[0].id
     }
   };
   await jwt.sign(
@@ -52,7 +51,7 @@ const payloader = async (res, data, code) => {
         status: 'success',
         data: {
           token,
-          data,
+          data: data[0],
         }
       });
     }
