@@ -17,28 +17,28 @@ const flagsDB = flags;
 const router = express.Router();
 
 // Create user account
-router.post('/api/v1/auth/signup', userSignUpValidate, userSignUp);
+router.post('/auth/signup', userSignUpValidate, userSignUp);
 
 // Login a user account
-router.post('/api/v1/auth/signin', userSignInValidate, userSignIn);
+router.post('/auth/signin', userSignInValidate, userSignIn);
 
 // fetch all properties
-router.get('/api/v1/properties', authMiddleware, getAllProperties);
+router.get('/properties', authMiddleware, getAllProperties);
 
 // fetch single property
-router.get('/api/v1/property/:id', authMiddleware, getProperty);
+router.get('/property/:id', authMiddleware, getProperty);
 
 // fetch all properties of a certain type
-router.get('/api/v1/property', authMiddleware, getPropertiesByType);
+router.get('/property', authMiddleware, getPropertiesByType);
 
 // create a new property
-router.post('/api/v1/property', authMiddleware, postValidate, postProperty);
+router.post('/property', authMiddleware, postValidate, postProperty);
 
 // update property
-router.patch('/api/v1/property/:id', authMiddleware, putProperty);
+router.patch('/property/:id', authMiddleware, putProperty);
 
 // delete property
-router.delete('/api/v1/property/:id', authMiddleware, deleteProperty);
+router.delete('/property/:id', authMiddleware, deleteProperty);
 
 
 /**
@@ -46,10 +46,10 @@ router.delete('/api/v1/property/:id', authMiddleware, deleteProperty);
  */
 
 // fetch all users
-router.get('/api/v1/users', authMiddleware, checkIfAdmin, usersDB);
+router.get('/users', authMiddleware, checkIfAdmin, usersDB);
 
 // fetch all flags
-router.get('/api/v1/flags', authMiddleware, checkIfAdmin, flagsDB);
+router.get('/flags', authMiddleware, checkIfAdmin, flagsDB);
 
 
 export default router;
