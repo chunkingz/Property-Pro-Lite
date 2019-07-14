@@ -1,25 +1,17 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
-import db from '../models/db';
-import helpers from '../helpers/propertyHelper';
-import getProps from '../helpers/getProperty';
+import helpers from '../helpers/PGpropertyHelper';
+import getter from '../helpers/getter';
 import cloudinary from '../helpers/cloudinary';
 import errorHelpers from '../helpers/errorHelper';
 
-const { saveNewProperty, updateProperty, deletesProperty } = helpers;
-const { property } = db;
+
+const {
+  checkProperty, postProp, updateProp, delProperty
+} = helpers;
 const imageUpload = cloudinary;
-const { inputError } = errorHelpers;
-
-
-/**
- * check if the property id is correct
- * @param  {Object} req the request object
- * @return  {Function} calls the next middleware if test passes
- */
-const checkProperty = req => property.find(prop => prop.id === parseInt(req, 10));
-const checkPropertyType = req => property.find(prop => prop.type === req);
-
+const { inputError, idError } = errorHelpers;
+const { getUsersandFlags } = getter;
 
 /**
  * Get all properties.
@@ -29,13 +21,9 @@ const checkPropertyType = req => property.find(prop => prop.type === req);
  *
 */
 
-const getAllProperties = (req, res) => res.status(200).send({
-  status: 'success',
-  data: {
-    message: 'All Properties successfully retrieved',
-    property,
-  }
-});
+const getAllProperties = async (req, res) => {
+  await getUsersandFlags(res, 'properties');
+};
 
 /**
  * Get all properties of a certain type, e.g 2 bedroom.
@@ -45,8 +33,8 @@ const getAllProperties = (req, res) => res.status(200).send({
  *
 */
 
-const getPropertiesByType = (req, res) => {
-  getProps(checkPropertyType(req.query.type), res, 'Invalid type');
+const getPropertiesByType = async (req, res) => {
+  await checkProperty(req.query.type.toLowerCase(), res, 'type');
 };
 
 /**
@@ -57,8 +45,9 @@ const getPropertiesByType = (req, res) => {
  *
 */
 
-const getProperty = (req, res) => {
-  getProps(checkProperty(req.params.id), res, 'Invalid ID');
+const getProperty = async (req, res) => {
+  const iderr = await idError(req, res);
+  if (!iderr) await checkProperty(req.params.id, res, 'id');
 };
 
 /**
@@ -70,21 +59,13 @@ const getProperty = (req, res) => {
 */
 
 const postProperty = async (req, res) => {
-  const {
-    owner, price, state, city, address, type, image_url
-  } = req.body;
-  inputError(req, res);
-  const image_uri = imageUpload(image_url);
+  const { image_url } = req.body;
+  const inputErr = await inputError(req, res);
 
-  const newProperty = await saveNewProperty(
-    owner, price, state, city, address, type, image_uri
-  );
-  return res.status(201).send({
-    status: 'success',
-    data: {
-      newProperty: newProperty[newProperty.length - 1],
-    }
-  });
+  if (!inputErr) {
+    const image_uri = await imageUpload(image_url);
+    await postProp(req, res, image_uri);
+  }
 };
 
 /**
@@ -95,29 +76,9 @@ const postProperty = async (req, res) => {
  *
 */
 
-const putProperty = (req, res) => {
-  const data = checkProperty(req.params.id);
-  if (data !== undefined) {
-    const {
-      owner, status, price, state, city, address, type, image_url
-    } = req.body;
-
-    const updatedProperty = updateProperty(
-      data.id, owner, status, price, state,
-      city, address, type, image_url
-    );
-    return res.status(201).send({
-      status: 'success',
-      data: {
-        message: 'Property updated successfully',
-        updatedProperty
-      }
-    });
-  }
-  return res.status(400).send({
-    status: 'error',
-    error: 'Property ad not found',
-  });
+const putProperty = async (req, res) => {
+  const iderr = await idError(req, res);
+  if (!iderr) await updateProp(req, res);
 };
 
 /**
@@ -129,19 +90,8 @@ const putProperty = (req, res) => {
 */
 
 const deleteProperty = async (req, res) => {
-  const data = await checkProperty(req.params.id);
-  if (data !== undefined) {
-    // console.log(data.id);
-    await deletesProperty(data.id);
-    return res.status(200).send({
-      status: 'success',
-      message: 'Property ad deleted successfully',
-    });
-  }
-  return res.status(400).send({
-    status: 'error',
-    error: 'Property ad not found',
-  });
+  const iderr = await idError(req, res);
+  if (!iderr) await delProperty(req, res);
 };
 
 

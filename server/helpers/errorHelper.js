@@ -3,9 +3,8 @@ import { validationResult } from 'express-validator';
 /**
  * Auth Error helper.
  * @param {object} res the response object.
- *
+ * @return  {Function} calls the next middleware if test passes
 */
-
 const authError = res => res.status(400).send({
   status: 'error',
   message: 'Invalid credentials'
@@ -15,9 +14,8 @@ const authError = res => res.status(400).send({
  * Input Error helper.
  * @param {object} req the request object.
  * @param {object} res the response object.
- *
+ * @return  {Function} calls the next middleware if test passes
 */
-
 const inputError = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -28,15 +26,21 @@ const inputError = (req, res) => {
   }
 };
 
-const userExists = (data, res) => {
-  if (data !== undefined) {
+/**
+ * id Error helper.
+ * @param {object} req the request object.
+ * @param {object} res the response object.
+ * @return  {Function} calls the next middleware if test passes
+*/
+const idError = (req, res) => {
+  const { id } = req.params;
+  const isNotNumber = /\D/;
+  if (isNotNumber.test(id)) {
     return res.status(400).send({
       status: 'error',
-      data: {
-        message: 'User already exists, kindly login'
-      }
+      errorMsg: 'Invalid id number'
     });
   }
 };
 
-export default { authError, inputError, userExists };
+export default { authError, inputError, idError };

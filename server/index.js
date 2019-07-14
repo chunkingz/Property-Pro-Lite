@@ -1,4 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 import express from 'express';
+import path from 'path';
 import router from './routes/routes';
 
 const app = express();
@@ -6,6 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(router);
 
+app.use(express.static(path.join(__dirname, '..')));
+// app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/', (req, res) => res.status(200).send({
   status: 'success',

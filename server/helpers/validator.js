@@ -26,7 +26,7 @@ const userSignUpValidate = [
   refactor2('first_name', 3),
   refactor2('last_name', 3),
   refactor2('password', 5),
-  refactor1('phoneNumber', 'Phone Number should be 11 characters'),
+  refactor1('phone_number', 'Phone Number should be 11 characters'),
   refactor2('address', 5),
 ];
 
