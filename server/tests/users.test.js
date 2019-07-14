@@ -18,10 +18,10 @@ const user = {
 };
 
 describe('Users route Test Suite', () => {
-  describe('POST /api/v1/auth/signup route', () => {
+  describe('POST /auth/signup route', () => {
     it('should create a new user account', async () => {
       const { status, res } = await chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/auth/signup')
         .set('content-type', 'application/json')
         .send(user);
       expect(status).to.eq(400);
@@ -29,7 +29,7 @@ describe('Users route Test Suite', () => {
     });
     it('should throw an error on empty user input', async () => {
       const { status } = await chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/auth/signup')
         .set('content-type', 'application/json')
         .send({
           email: '', first_name: '', last_name: '', password: '', phoneNumber: ''
@@ -38,7 +38,7 @@ describe('Users route Test Suite', () => {
     });
     it('should throw an error if user exists', async () => {
       const { status, res } = await chai.request(app)
-        .post('/api/v1/auth/signup')
+        .post('/auth/signup')
         .set('content-type', 'application/json')
         .send({
           email: 'chun@email.com',
@@ -54,10 +54,10 @@ describe('Users route Test Suite', () => {
     });
   });
 
-  describe('POST /api/v1/auth/signin route', () => {
+  describe('POST /auth/signin route', () => {
     it('should login a user', async () => {
       const { status, res } = await chai.request(app)
-        .post('/api/v1/auth/signin')
+        .post('/auth/signin')
         .set('content-type', 'application/json')
         .send({
           email: 'john@abc.com', password: 'password'
@@ -70,7 +70,7 @@ describe('Users route Test Suite', () => {
     });
     it('should throw an error on empty user input', async () => {
       const { status } = await chai.request(app)
-        .post('/api/v1/auth/signin')
+        .post('/auth/signin')
         .set('content-type', 'application/json')
         .send({
           email: '', password: ''
@@ -80,17 +80,17 @@ describe('Users route Test Suite', () => {
   });
 
 
-  describe('GET /api/v1/users route', () => {
+  describe('GET /users route', () => {
     it('should fetch all users from the db', async () => {
       const { text } = await chai.request(app)
-        .post('/api/v1/auth/signin')
+        .post('/auth/signin')
         .send({
           email: 'john@abc.com',
           password: 'password'
         });
       jwtToken = JSON.parse(text).data.token;
       const { status, res } = await chai.request(app)
-        .get('/api/v1/users')
+        .get('/users')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -102,14 +102,14 @@ describe('Users route Test Suite', () => {
     });
     it('should throw an error on user not admin', async () => {
       const { text } = await chai.request(app)
-        .post('/api/v1/auth/signin')
+        .post('/auth/signin')
         .send({
           email: 'john1@abc.com',
           password: 'password'
         });
       jwtToken = JSON.parse(text).data.token;
       const { status, res } = await chai.request(app)
-        .get('/api/v1/users')
+        .get('/users')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();

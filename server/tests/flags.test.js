@@ -9,17 +9,17 @@ let jwtToken;
 
 
 describe('Flags route Test Suite', () => {
-  describe('GET /api/v1/flags route', () => {
+  describe('GET /flags route', () => {
     it('should fetch all flags from the db', async () => {
       const { text } = await chai.request(app)
-        .post('/api/v1/auth/signin')
+        .post('/auth/signin')
         .send({
           email: 'john@abc.com',
           password: 'password'
         });
       jwtToken = JSON.parse(text).data.token;
       const { status, res } = await chai.request(app)
-        .get('/api/v1/flags')
+        .get('/flags')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -31,14 +31,14 @@ describe('Flags route Test Suite', () => {
     });
     it('should throw an error on user not admin', async () => {
       const { text } = await chai.request(app)
-        .post('/api/v1/auth/signin')
+        .post('/auth/signin')
         .send({
           email: 'john1@abc.com',
           password: 'password'
         });
       jwtToken = JSON.parse(text).data.token;
       const { status, res } = await chai.request(app)
-        .get('/api/v1/flags')
+        .get('/flags')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();

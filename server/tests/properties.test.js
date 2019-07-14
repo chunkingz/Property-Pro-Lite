@@ -22,7 +22,7 @@ let propid;
 describe('Properties route Test Suite', () => {
   before(async () => {
     const { text } = await chai.request(app)
-      .post('/api/v1/auth/signin')
+      .post('/auth/signin')
       .send({
         email: 'john@abc.com',
         password: 'password'
@@ -30,10 +30,10 @@ describe('Properties route Test Suite', () => {
     jwtToken = JSON.parse(text).data.token;
   });
 
-  describe('GET /api/v1/properties', () => {
+  describe('GET /properties', () => {
     it('should get/fetch all the property ads', async () => {
       const { status, res } = await chai.request(app)
-        .get('/api/v1/properties')
+        .get('/properties')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -45,10 +45,10 @@ describe('Properties route Test Suite', () => {
     });
   });
 
-  describe('GET /api/v1/property/:id', () => {
+  describe('GET /property/:id', () => {
     it('should get a specific/single property ad', async () => {
       const { status, res } = await chai.request(app)
-        .get('/api/v1/property/2')
+        .get('/property/2')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -58,7 +58,7 @@ describe('Properties route Test Suite', () => {
     });
     it('should throw an error on invalid id of specific property ad', async () => {
       const { status, res } = await chai.request(app)
-        .get('/api/v1/property/invalidId')
+        .get('/property/invalidId')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -68,10 +68,10 @@ describe('Properties route Test Suite', () => {
     });
   });
 
-  describe('POST /api/v1/property/ route', () => {
+  describe('POST /property/ route', () => {
     it('should create a new property ad', async () => {
       const { status, res } = await chai.request(app)
-        .post('/api/v1/property/')
+        .post('/property/')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send(prop);
@@ -83,10 +83,10 @@ describe('Properties route Test Suite', () => {
     });
   });
 
-  describe('PATCH /api/v1/property/:id route', () => {
+  describe('PATCH /property/:id route', () => {
     it('should update an existing property ad', async () => {
       const { status, res } = await chai.request(app)
-        .patch(`/api/v1/property/${propid}`)
+        .patch(`/property/${propid}`)
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send({ price: 2500, state: 'Plateau', city: 'Jos' });
@@ -99,7 +99,7 @@ describe('Properties route Test Suite', () => {
     });
     it('should throw error on invalid id', async () => {
       const { status, res } = await chai.request(app)
-        .patch('/api/v1/property/invalid_id')
+        .patch('/property/invalid_id')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send({ price: 2500, state: 'Plateau', city: 'Jos' });
@@ -109,10 +109,10 @@ describe('Properties route Test Suite', () => {
     });
   });
 
-  describe('DELETE /api/v1/property/:id route', () => {
+  describe('DELETE /property/:id route', () => {
     it('should delete an existing property ad', async () => {
       const { status, res } = await chai.request(app)
-        .delete(`/api/v1/property/${propid}`)
+        .delete(`/property/${propid}`)
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -122,7 +122,7 @@ describe('Properties route Test Suite', () => {
     });
     it('should throw error on invalid id', async () => {
       const { status, res } = await chai.request(app)
-        .delete('/api/v1/property/invalid_id')
+        .delete('/property/invalid_id')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -132,10 +132,10 @@ describe('Properties route Test Suite', () => {
     });
   });
 
-  describe('GET /api/v1/properties', () => {
+  describe('GET /properties', () => {
     it('should get/fetch all the property ads of a specific type', async () => {
       const { status, res } = await chai.request(app)
-        .get('/api/v1/property?type=2+bedroom')
+        .get('/property?type=2+bedroom')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
@@ -145,7 +145,7 @@ describe('Properties route Test Suite', () => {
     });
     it('should throw an error on ivalid type', async () => {
       const { status, res } = await chai.request(app)
-        .get('/api/v1/property?type=asdf')
+        .get('/property?type=asdf')
         .set('content-type', 'application/json')
         .set('x-auth-token', jwtToken)
         .send();
