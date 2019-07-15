@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import jwt from 'jsonwebtoken';
 
 /**
@@ -46,7 +47,13 @@ const payloader = async (res, data, code) => {
     'jwtSecret',
     { expiresIn: '7d' },
     (err, token) => {
-      if (err) throw err;
+      if (err) {
+        console.log(err);
+        return res.status(400).send({
+          status: 'error',
+          error: err
+        });
+      }
       return res.status(code).send({
         status: 'success',
         data: {

@@ -43,16 +43,17 @@ const alreadyExists = (res, rows) => {
 /**
  * Helper function to check if User already exists in PostgreSQL DB
  * @param  {Object} req the request object
+ * @param  {Object} res the response object
  * @return  {Function} calls the next middleware if test passes
  */
-const checkIfUserExists = async (req) => {
+const checkIfUserExists = async (req, res) => {
   const { email } = req.body;
   const findOneQuery = 'SELECT * FROM users WHERE email = $1';
   try {
     const { rows } = await pool.query(findOneQuery, [email]);
     return rows;
   } catch (err) {
-    console.log(err);
+    errorHelp(res, err);
   }
 };
 
@@ -88,7 +89,7 @@ const postUser = async (req, res) => {
             VALUES ($1, $2, $3, $4, $5, $6, $7)
             returning *`;
     try {
-      const rows = await checkIfUserExists(req);
+      const rows = await checkIfUserExists(req, res);
       const alreadyexists = await alreadyExists(res, rows);
 
       if (alreadyexists === undefined) {
