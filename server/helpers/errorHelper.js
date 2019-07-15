@@ -7,7 +7,7 @@ import { validationResult } from 'express-validator';
 */
 const authError = res => res.status(400).send({
   status: 'error',
-  message: 'Invalid credentials'
+  error: 'Invalid credentials'
 });
 
 /**
@@ -21,7 +21,7 @@ const inputError = (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).send({
       status: 'error',
-      errorMsg: errors.array(),
+      error: errors.array(),
     });
   }
 };
@@ -38,7 +38,7 @@ const idError = (req, res) => {
   if (isNotNumber.test(id)) {
     return res.status(400).send({
       status: 'error',
-      errorMsg: 'Invalid id number'
+      error: 'Invalid id number'
     });
   }
 };

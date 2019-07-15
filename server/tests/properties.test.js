@@ -64,7 +64,7 @@ describe('Properties route Test Suite', () => {
         .send();
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');
-      expect(JSON.parse(res.text).errorMsg).to.eq('Invalid id number');
+      expect(JSON.parse(res.text).error).to.eq('Invalid id number');
     });
   });
 
@@ -105,7 +105,7 @@ describe('Properties route Test Suite', () => {
         .send({ price: 2500, state: 'Plateau', city: 'Jos' });
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');
-      expect(JSON.parse(res.text).errorMsg).to.eq('Invalid id number');
+      expect(JSON.parse(res.text).error).to.eq('Invalid id number');
     });
   });
 
@@ -128,7 +128,7 @@ describe('Properties route Test Suite', () => {
         .send();
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');
-      expect(JSON.parse(res.text).errorMsg).to.eq('Invalid id number');
+      expect(JSON.parse(res.text).error).to.eq('Invalid id number');
     });
   });
 

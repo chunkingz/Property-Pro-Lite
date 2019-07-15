@@ -8,7 +8,6 @@ import pool from '../dbConnect';
  * @return  {Function} next calls the next middleware
  *
 */
-
 const getUsersandFlags = async (res, tableName) => {
   try {
     await pool.query(`SELECT * FROM ${tableName}`, (error, response) => {
@@ -35,7 +34,6 @@ const getUsersandFlags = async (res, tableName) => {
  * @return  {Function} next calls the next middleware
  *
 */
-
 const getProps = (data, res, errMsg) => {
   if (data !== undefined) {
     return getUsersandFlags(res, 'properties');

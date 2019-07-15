@@ -67,12 +67,12 @@ const checkProperty = async (req, res, str) => {
 };
 
 /**
-   * POST/Create a new Property From PostgreSQL
-   * @param  {Object} req the request object
-   * @param  {Object} res the response object
-   * @param  {String} img the image string
-   * @return  {Function} calls the next middleware if test passes
-   */
+ * POST/Create a new Property From PostgreSQL
+ * @param  {Object} req the request object
+ * @param  {Object} res the response object
+ * @param  {String} img the image string
+ * @return  {Function} calls the next middleware if test passes
+ */
 const postProp = async (req, res, img) => {
   const {
     owner, price, state, city, address, type
@@ -102,12 +102,12 @@ const postProp = async (req, res, img) => {
 
 
 /**
-   * UPDATE an existing Property From PostgreSQL
-   * @param  {Object} req the request object
-   * @param  {Object} res the response object
-   * @param  {String} img the image string
-   * @return  {Function} calls the next middleware if test passes
-   */
+ * UPDATE an existing Property From PostgreSQL
+ * @param  {Object} req the request object
+ * @param  {Object} res the response object
+ * @param  {String} img the image string
+ * @return  {Function} calls the next middleware if test passes
+ */
 const updateProp = async (req, res) => {
   const findOneQuery = 'SELECT * FROM properties WHERE id = $1';
   const {
