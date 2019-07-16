@@ -20,7 +20,6 @@ const { getUsersandFlags } = getter;
  * @return  {Function} next calls the next middleware
  *
 */
-
 const getAllProperties = async (req, res) => {
   await getUsersandFlags(res, 'properties');
 };
@@ -32,10 +31,15 @@ const getAllProperties = async (req, res) => {
  * @return  {Function} next calls the next middleware
  *
 */
-
 const getPropertiesByType = async (req, res) => {
-  await checkProperty(req.query.type.toLowerCase(), res, 'type');
+  console.log(req.query);
+  if (Object.keys(req.query).length !== 0) await checkProperty(req.query.type.toLowerCase(), res, 'type');
+  return res.status(400).send({
+    status: 'error',
+    error: 'Invalid id number'
+  });
 };
+
 
 /**
  * Get a specific property.
@@ -44,7 +48,6 @@ const getPropertiesByType = async (req, res) => {
  * @return  {Function} next calls the next middleware
  *
 */
-
 const getProperty = async (req, res) => {
   const iderr = await idError(req, res);
   if (!iderr) await checkProperty(req.params.id, res, 'id');
@@ -57,7 +60,6 @@ const getProperty = async (req, res) => {
  * @return  {Function} next calls the next middleware
  *
 */
-
 const postProperty = async (req, res) => {
   const { image_url } = req.body;
   const inputErr = await inputError(req, res);
@@ -75,7 +77,6 @@ const postProperty = async (req, res) => {
  * @return  {Function} next calls the next middleware
  *
 */
-
 const putProperty = async (req, res) => {
   const iderr = await idError(req, res);
   if (!iderr) await updateProp(req, res);
@@ -88,7 +89,6 @@ const putProperty = async (req, res) => {
  * @return  {Function} next calls the next middleware
  *
 */
-
 const deleteProperty = async (req, res) => {
   const iderr = await idError(req, res);
   if (!iderr) await delProperty(req, res);
