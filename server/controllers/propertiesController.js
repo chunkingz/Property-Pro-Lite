@@ -32,12 +32,14 @@ const getAllProperties = async (req, res) => {
  *
 */
 const getPropertiesByType = async (req, res) => {
-  console.log(req.query);
-  if (Object.keys(req.query).length !== 0) await checkProperty(req.query.type.toLowerCase(), res, 'type');
-  return res.status(400).send({
-    status: 'error',
-    error: 'Invalid id number'
-  });
+  if (Object.keys(req.query).length === 0) {
+    return res.status(400).send({
+      status: 'error',
+      error: 'Invalid url parameters'
+    });
+  }
+
+  await checkProperty(req.query.type.toLowerCase(), res, 'type');
 };
 
 
