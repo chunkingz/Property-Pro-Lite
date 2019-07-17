@@ -10,12 +10,20 @@ import jwt from 'jsonwebtoken';
  *
 */
 const authMiddleware = async (req, res, next) => {
-  const token = req.header('x-auth-token');
-  if (!token) {
+  const token1 = req.headers.authorization;
+  const token2 = req.body.authorization;
+
+  if (!token1 && !token2) {
     return res.status(401).send({
       status: 'error',
       error: 'No token, auth denied'
     });
+  }
+  let token;
+  if (typeof token1 !== 'undefined') {
+    token = token1;
+  } else {
+    token = token2;
   }
   try {
     const decoded = jwt.verify(token, 'jwtSecret');
