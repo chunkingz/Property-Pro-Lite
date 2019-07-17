@@ -21,7 +21,7 @@ describe('Flags route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .get('/flags')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(200);
       expect(JSON.parse(res.text).status).to.eq('success');
@@ -40,7 +40,7 @@ describe('Flags route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .get('/flags')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');

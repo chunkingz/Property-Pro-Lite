@@ -35,7 +35,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .get('/properties')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(200);
       expect(JSON.parse(res.text).status).to.eq('success');
@@ -50,7 +50,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .get('/property/2')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(200);
       expect(JSON.parse(res.text).status).to.eq('success');
@@ -60,7 +60,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .get('/property/invalidId')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');
@@ -73,7 +73,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .post('/property/')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send(prop);
       expect(status).to.eq(201);
       expect(JSON.parse(res.text).status).to.eq('success');
@@ -88,7 +88,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .patch(`/property/${propid}`)
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send({ price: 2500, state: 'Plateau', city: 'Jos' });
       expect(status).to.eq(200);
       expect(JSON.parse(res.text).status).to.eq('success');
@@ -101,7 +101,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .patch('/property/invalid_id')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send({ price: 2500, state: 'Plateau', city: 'Jos' });
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');
@@ -114,7 +114,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .delete(`/property/${propid}`)
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(200);
       expect(JSON.parse(res.text).status).to.eq('success');
@@ -124,7 +124,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .delete('/property/invalid_id')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');
@@ -137,7 +137,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .get('/property?type=2+bedroom')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(200);
       expect(JSON.parse(res.text).status).to.eq('success');
@@ -147,7 +147,7 @@ describe('Properties route Test Suite', () => {
       const { status, res } = await chai.request(app)
         .get('/property?type=asdf')
         .set('content-type', 'application/json')
-        .set('x-auth-token', jwtToken)
+        .set('authorization', jwtToken)
         .send();
       expect(status).to.eq(400);
       expect(JSON.parse(res.text).status).to.eq('error');
