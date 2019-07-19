@@ -109,10 +109,16 @@ const postProp = async (req, res, img) => {
  * @return  {Function} calls the next middleware if test passes
  */
 const updateProp = async (req, res) => {
+  const urlString = req.originalUrl.split('/');
+
   const findOneQuery = 'SELECT * FROM properties WHERE id = $1';
   const {
-    owner, status, price, state, city, address, type
+    owner, price, state, city, address, type
   } = req.body;
+  let { status } = req.body;
+
+  if (urlString.length === 4 && urlString[3] === 'sold') status = 'sold';
+
   const updateOneQuery = `UPDATE properties 
         SET owner=$1, status=$2, price=$3, state=$4, city=$5, address=$6, type=$7, image_url=$8 WHERE id=$9
         returning *`;

@@ -8,9 +8,17 @@ import checkIfAdmin from '../helpers/checkIfAdmin';
 
 const { authMiddleware } = auth;
 const { postValidate, userSignUpValidate, userSignInValidate } = validate;
-const { userSignUp, userSignIn, usersDB } = users;
 const {
-  getAllProperties, getPropertiesByType, getProperty, postProperty, putProperty, deleteProperty
+  userSignUp, userSignIn, usersDB, userFortgotPassword
+} = users;
+const {
+  getAllProperties,
+  getPropertiesByType,
+  getProperty,
+  postProperty,
+  putProperty,
+  deleteProperty,
+  soldProperty
 } = properties;
 const flagsDB = flags;
 
@@ -21,6 +29,9 @@ router.post('/auth/signup', userSignUpValidate, userSignUp);
 
 // Login a user account
 router.post('/auth/signin', userSignInValidate, userSignIn);
+
+// Forgot password
+router.post('/auth/:email/reset_password', userFortgotPassword);
 
 // fetch all properties
 router.get('/properties', authMiddleware, getAllProperties);
@@ -36,6 +47,9 @@ router.post('/property', authMiddleware, postValidate, postProperty);
 
 // update property
 router.patch('/property/:id', authMiddleware, putProperty);
+
+// update property as sold
+router.patch('/property/:id/sold', authMiddleware, soldProperty);
 
 // delete property
 router.delete('/property/:id', authMiddleware, deleteProperty);
