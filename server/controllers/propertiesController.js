@@ -84,6 +84,20 @@ const putProperty = async (req, res) => {
   if (!iderr) await updateProp(req, res);
 };
 
+
+/**
+ * Update property data.
+ * @param {object} req the request object.
+ * @param {object} res the response object.
+ * @return  {Function} next calls the next middleware
+ *
+*/
+const soldProperty = async (req, res) => {
+  const iderr = await idError(req, res);
+  if (!iderr) await updateProp(req, res);
+};
+
+
 /**
  * Delete a property ad.
  * @param {object} req the request object.
@@ -98,5 +112,11 @@ const deleteProperty = async (req, res) => {
 
 
 export default {
-  getAllProperties, getPropertiesByType, getProperty, postProperty, putProperty, deleteProperty
+  getAllProperties,
+  getPropertiesByType,
+  getProperty,
+  postProperty,
+  putProperty,
+  deleteProperty,
+  soldProperty
 };
